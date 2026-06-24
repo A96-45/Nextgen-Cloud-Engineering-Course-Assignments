@@ -1,0 +1,22 @@
+# Version control
+.git
+.gitignore
+
+# Environment variables
+.env
+.env.*
+
+# Docker configuration files (the container itself doesn't need them)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# IDE and Editor folders
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+
+# Database initial scripts (only the DB container needs this, not the PHP container)
+database/

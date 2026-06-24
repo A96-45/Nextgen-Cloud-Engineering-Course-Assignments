@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    container_name: nextgen_app
+    ports:
+      - "8000:80"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=vscode
+      - DB_PASSWORD=23264008
+      - DB_NAME=school
+    depends_on:
+      - db
+    volumes:
+      # Mount current directory for local development
+      - .:/var/www/html
+
+  db:
+    image: mysql:8.0
+    container_name: nextgen_db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=vscode
+      - MYSQL_PASSWORD=23264008
+      - MYSQL_DATABASE=school
+    volumes:
+      - db_data:/var/lib/mysql
+      # Initialize the database with the schema
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db_data:
