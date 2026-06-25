@@ -1,31 +1,20 @@
 <?php
-/**
- * Database Configuration and Connection
- * Handles MySQL connection and provides helper functions
- */
 
-// Database credentials — read from environment (Docker) or fall back to local dev values
-$db_host     = getenv('DB_HOST')     ?: '127.0.0.1';
-$db_port     = (int)(getenv('DB_PORT')     ?: 3306);
-$db_user     = getenv('DB_USER')     ?: 'vscode';
-$db_password = getenv('DB_PASSWORD') ?: '23264008';
-$db_name     = getenv('DB_NAME')     ?: 'school';
+$db_host = '127.0.0.1';
+$db_port = 3306;
+$db_user = 'vscode';
+$db_password = '23264008';
+$db_name = 'school';
 
-// Create connection using mysqli (improved MySQL extension)
 $conn = new mysqli($db_host, $db_user, $db_password, $db_name, $db_port);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Set charset to utf8mb4 (for emoji and special characters)
 $conn->set_charset("utf8mb4");
 
-/**
- * Execute a query
- * @param string $sql - The SQL query
- * @param string $types - Parameter types (e.g., 'ss' for two strings)
+function executeQuery($sql, $types = '', $params = []) {
  * @param array $params - Parameters to bind (for prepared statements)
  * @return mixed - Result object or false on error
  */
@@ -192,9 +181,6 @@ function getCurrentUser() {
     return fetchOne($sql, 'i', [$_SESSION['user_id']]);
 }
 
-/**
- * Redirect to login if not authenticated
- */
 function requireLogin() {
     if (!isLoggedIn()) {
         header("Location: login.php");
@@ -202,6 +188,5 @@ function requireLogin() {
     }
 }
 
-// Start session automatically
 startSession();
 ?>
