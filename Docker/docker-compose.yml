@@ -1,0 +1,12 @@
+services:
+  node-app:
+    build: .
+    container_name: student-attendance-app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./attendance.db:/app/attendance.db
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
+    command: npm start

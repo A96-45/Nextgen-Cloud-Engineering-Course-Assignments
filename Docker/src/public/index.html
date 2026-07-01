@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Student Attendance</h1>
+  </header>
+
+  <main>
+
+    <!-- Add Student -->
+    <section>
+      <h2>Add Student</h2>
+      <form id="add-student-form">
+        <input type="text" id="student-name" placeholder="Full name" required>
+        <input type="email" id="student-email" placeholder="Email address" required>
+        <button type="submit">Add Student</button>
+      </form>
+      <p id="student-form-message" class="msg"></p>
+    </section>
+
+    <hr>
+
+    <!-- Mark Attendance -->
+    <section>
+      <h2>Mark Attendance</h2>
+      <form id="mark-attendance-form">
+        <select id="attendance-student-select" required>
+          <option value="" disabled selected>Select student</option>
+        </select>
+        <input type="date" id="attendance-date" required>
+        <div class="radio-row">
+          <label><input type="radio" name="status" value="present" checked> Present</label>
+          <label><input type="radio" name="status" value="absent"> Absent</label>
+        </div>
+        <button type="submit">Mark Attendance</button>
+      </form>
+      <p id="attendance-form-message" class="msg"></p>
+    </section>
+
+    <hr>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="tab-students">Students</button>
+      <button class="tab-btn" data-tab="tab-attendance">Attendance</button>
+      <button class="tab-btn" data-tab="tab-summary">Summary</button>
+    </nav>
+
+    <!-- Tab: Students -->
+    <div id="tab-students" class="tab-pane active">
+      <div class="pane-top">
+        <h2>All Students</h2>
+        <button id="refresh-students-btn" class="btn-small">Refresh</button>
+      </div>
+      <table id="students-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="students-table-body"></tbody>
+      </table>
+      <p id="students-empty" class="empty" style="display:none">No students yet.</p>
+    </div>
+
+    <!-- Tab: Attendance -->
+    <div id="tab-attendance" class="tab-pane" style="display:none">
+      <div class="pane-top">
+        <h2>Attendance Log</h2>
+        <button id="refresh-attendance-btn" class="btn-small">Refresh</button>
+      </div>
+      <!-- Filters -->
+      <div class="filters">
+        <select id="filter-student"><option value="">All students</option></select>
+        <input type="date" id="filter-date">
+        <select id="filter-status">
+          <option value="">All statuses</option>
+          <option value="present">Present</option>
+          <option value="absent">Absent</option>
+        </select>
+        <button id="clear-filters-btn" class="btn-small">Clear</button>
+      </div>
+      <table id="attendance-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="attendance-table-body"></tbody>
+      </table>
+      <p id="attendance-empty" class="empty" style="display:none">No records found.</p>
+    </div>
+
+    <!-- Tab: Summary -->
+    <div id="tab-summary" class="tab-pane" style="display:none">
+      <h2>Student Summary</h2>
+      <div class="filters">
+        <select id="summary-student-select">
+          <option value="" disabled selected>Select a student</option>
+        </select>
+      </div>
+
+      <div id="summary-stats" style="display:none">
+        <div class="stats-row">
+          <div class="stat"><span id="stats-total">0</span><small>Total Days</small></div>
+          <div class="stat"><span id="stats-present">0</span><small>Present</small></div>
+          <div class="stat"><span id="stats-absent">0</span><small>Absent</small></div>
+          <div class="stat"><span id="stats-pct">0%</span><small>Rate</small></div>
+        </div>
+        <table id="summary-table">
+          <thead>
+            <tr><th>ID</th><th>Date</th><th>Status</th></tr>
+          </thead>
+          <tbody id="summary-table-body"></tbody>
+        </table>
+        <p id="summary-empty" class="empty" style="display:none">No logs for this student.</p>
+      </div>
+      <p id="summary-default" class="empty">Select a student to view their report.</p>
+    </div>
+
+  </main>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="modal" style="display:none">
+    <div class="modal-box">
+      <h3>Edit Attendance</h3>
+      <p id="modal-info"></p>
+      <input type="hidden" id="modal-record-id">
+      <select id="modal-status-select">
+        <option value="present">Present</option>
+        <option value="absent">Absent</option>
+      </select>
+      <div class="modal-actions">
+        <button id="save-edit-btn">Save</button>
+        <button id="cancel-edit-btn" class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
