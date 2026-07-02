@@ -21,3 +21,7 @@ Thumbs.db
 # Log files
 *.log
 .vscode
+
+# Kubernetes secrets
+kubernetes/mysql-secret.yaml
+kubernetes/*-secret.yaml
